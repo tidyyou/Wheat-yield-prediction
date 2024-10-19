@@ -130,7 +130,7 @@ write_xlsx(feat_yield4,"way4.xlsx")
 ###SC
 #Calculating the geographic center of gravity
 file_wheat<-str_c("CHN_Wheat_",2008:2018,".tif")
-china<-read_sf("D:/data/矢量/china_county.gpkg")%>%
+china<-read_sf("china_county.gpkg")%>%
   select(-c(4:6))
 F_geo_center<-function(a,b){
   a<-china%>%
