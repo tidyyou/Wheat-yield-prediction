@@ -18,7 +18,7 @@ library(sf)
 library(terra)
 library(sperrorest)
 ####Data prepare
-data_yield<-read_excel("data_yield.xlsx")#data_yield换为data_yield
+data_yield<-read_excel("data_yield.xlsx")
 data_yield1<-data_yield%>%
   select(-c(Year,Code_County,Code_Perfecture,Code_Province))%>%
   mutate(across(2:89,scale))
@@ -86,6 +86,7 @@ instance2 = fsi(
   measure = msr("regr.rsq"),
   terminator = trm("evals", n_evals=500))
 fselector=fs("random_search")
+future::plan("multisession", workers=10)
 fselector$optimize(instance1)
 fselector$optimize(instance2)
 feat_yield2<-tibble(class="w",feature=intersect(instance1$result_feature_set,instance2$result_feature_set))
